@@ -1,17 +1,29 @@
-# 문의 DB 연결 설정
+# 댓글 게시판 DB 연결 설정
 
-현재 사이트 코드는 Supabase 연결 및 문의 등록 기능으로 변경되었습니다. 실제 저장을 활성화하려면 아래 설정이 필요합니다.
+사이트의 문의 영역은 이메일 전송 폼이 아니라 짧은 댓글을 등록하고 공개 목록으로 보여주는 게시판으로 변경되었습니다.
 
-1. https://supabase.com 에서 로그인 후 새 프로젝트를 만듭니다.
-2. Supabase 대시보드의 SQL Editor에서 `supabase/contact_inquiries.sql` 파일 내용을 복사해 실행합니다.
+## 1. Supabase 프로젝트 준비
+1. https://supabase.com 에서 로그인하고 프로젝트를 만듭니다.
+2. Supabase 대시보드의 SQL Editor에서 `supabase/site_comments.sql` 파일 전체를 복사해 실행합니다.
 3. Project Settings > API Keys에서 Project URL과 Publishable key(또는 legacy anon key)를 복사합니다.
-4. 저장소의 `supabase-config.js`에서 `YOUR_SUPABASE_PROJECT_URL` 및 `YOUR_SUPABASE_PUBLISHABLE_KEY`를 실제 값으로 교체해 저장합니다.
-5. GitHub Pages 배포가 끝나면 사이트 문의 폼에서 테스트 등록 후 Supabase Table Editor의 `contact_inquiries` 테이블에서 확인합니다.
 
-보안:
-- 브라우저에는 publishable/anon 키만 사용합니다.
+## 2. 사이트 연결
+저장소의 `supabase-config.js` 파일에서 아래 두 값을 실제 프로젝트 값으로 바꿉니다.
+- `YOUR_SUPABASE_PROJECT_URL`
+- `YOUR_SUPABASE_PUBLISHABLE_KEY`
+
+GitHub Pages 배포가 완료되면 사이트의 댓글 영역에서 댓글 등록과 목록 조회를 테스트합니다.
+
+## 3. 동작 방식
+- 댓글은 최대 1,000자입니다.
+- 이름이나 이메일 없이 댓글 내용만 입력하면 됩니다.
+- 최근 댓글 50개를 최신순으로 표시합니다.
+- 댓글은 공개되며 방문자는 새 댓글 등록과 조회만 할 수 있습니다.
+- 방문자에게 댓글 수정/삭제 권한은 제공하지 않습니다.
+
+## 보안 주의
+- 브라우저에는 Publishable/anon 키만 사용합니다.
 - service_role/secret 키는 절대 프런트엔드에 넣지 않습니다.
-- 방문자 역할은 문의 INSERT만 가능하며 조회/수정/삭제 권한은 없습니다.
-- 관리자 조회는 Supabase 대시보드에서 진행합니다.
+- RLS 정책으로 공개 조회 및 등록만 허용합니다.
 
-주의: Supabase 프로젝트 생성과 실제 키 입력 및 SQL 실행은 프로젝트 소유자 계정에서 직접 완료해야 합니다. 이 단계가 끝나기 전에는 문의 등록이 DB에 저장되지 않습니다.
+**중요:** 코드 변경만으로 DB가 자동 생성되지는 않습니다. Supabase에서 SQL을 실행하고 실제 Project URL 및 Publishable key를 설정해야 댓글 등록/조회가 작동합니다.
