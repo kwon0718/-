@@ -1,7 +1,7 @@
 // Supabase public browser configuration.
-// Replace both placeholders with your project's URL and publishable (or legacy anon) key.
+// The publishable key is safe for browser use when RLS is enabled.
 // Never put a service_role or secret key in this file.
 window.supabaseConfig = {
-  url: "YOUR_SUPABASE_PROJECT_URL",
-  anonKey: "YOUR_SUPABASE_PUBLISHABLE_KEY"
+  url: "https://ctifasedneukprlpkxfd.supabase.co",
+  anonKey: "sb_publishable_h42CPf16zO9mgSKhi84gBg_IMj9_ZMg"
 };
